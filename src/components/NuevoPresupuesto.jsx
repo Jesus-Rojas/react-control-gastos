@@ -22,14 +22,14 @@ const NuevoPresupuesto = ({ presupuesto, setPresupuesto, setIsValidPresupuesto }
       <div className='campo'>
         <label>Definir Presupuesto</label>
         <input 
-          type="number" 
+          type='number' 
           className='nuevo-presupuesto'
           value={presupuesto}
           placeholder='Añade tu Presupuesto'
           onChange={ e => setPresupuesto(Number(e.target.value))}
         />
       </div>
-      <input type="submit" value="Añadir" />
+      <input type='submit' value='Añadir' />
       { mensaje && (
         <Mensaje
           tipo='error'
