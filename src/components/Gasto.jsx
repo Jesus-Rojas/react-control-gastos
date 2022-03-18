@@ -33,7 +33,7 @@ const Gasto = ({ gasto, setGastoEditar, deleteGasto }) => {
     </TrailingActions>
   )
   const handleDelete = () => { 
-    if (confirm()) {
+    if (confirm('¿Deseas eliminar el gasto?')) {
       deleteGasto(id)
     }
   }
