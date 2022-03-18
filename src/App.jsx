@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import ListadoGastos from './components/ListadoGastos'
 import { generarId } from './helpers'
@@ -12,19 +12,41 @@ function App() {
   const [isValidpresupuesto, setIsValidPresupuesto] = useState(false)
   const [animarModal, setAnimarModal] = useState(false)
   const [gastos, setGastos] = useState([])
+  const [gastoEditar, setGastoEditar] = useState({})
 
   // methods
   const handleNuevoGasto = () => { 
-    setModal(true)
-    setTimeout(() => {
-      setAnimarModal(true)
-    }, 350);
+    openModal(true)
+    setGastoEditar({})
   }
   const guardarGasto = (gasto) => {
-    gasto.id = generarId()
-    gasto.fecha = Date.now()
-    setGastos([...gastos, gasto])
+    if (gasto.id) {
+      const gastosUpdate = gastos.map( data => data.id === gasto.id ? gasto : data)
+      setGastos(gastosUpdate)
+    } else {
+      gasto.fecha = Date.now()
+      gasto.id = generarId()
+      setGastos([...gastos, gasto])
+    }
+    openModal(false)
   }
+  const openModal = (condicion) => { 
+    setModal(condicion)
+    setTimeout(() => {
+      setAnimarModal(condicion)
+    }, 350);
+  }
+  const deleteGasto = (id) => { 
+    const filtro = gastos.filter( data => data.id !== id)
+    setGastos(filtro)
+  }
+
+  useEffect(() => {
+    if (Object.keys(gastoEditar).length > 0) {
+      openModal(true)
+    }
+  }, [gastoEditar])
+  
 
   return (
     <div className={modal ? 'fijar' : ''}>
@@ -40,6 +62,8 @@ function App() {
           <main>
             <ListadoGastos 
               gastos={gastos}
+              deleteGasto={deleteGasto}
+              setGastoEditar={setGastoEditar}
             />
           </main>
           <div className="nuevo-gasto">
@@ -56,7 +80,9 @@ function App() {
           guardarGasto={guardarGasto}
           animarModal={animarModal}
           setAnimarModal={setAnimarModal}
+          gastoEditar={gastoEditar}
           setModal={setModal}
+          setGastoEditar={setGastoEditar}
         />
       )}
     </div>
