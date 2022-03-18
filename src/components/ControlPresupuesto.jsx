@@ -67,7 +67,7 @@ const ControlPresupuesto = ({
         <p>
           <span>Presupuesto: </span> {formatearCantidad(presupuesto)}
         </p>
-        <p className={disponible < 0 && 'negativo'}>
+        <p className={disponible < 0 ? 'negativo' : ''}>
           <span>Disponible: </span> {formatearCantidad(disponible)}
         </p>
         <p>
