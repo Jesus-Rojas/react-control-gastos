@@ -251,6 +251,7 @@ main {
     border: none;
     border-radius: 1rem;
     text-align: center;
+    margin-left: 3rem;
     background-color: var(--gris-claro);
 }
 
